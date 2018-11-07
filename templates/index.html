@@ -22,14 +22,18 @@
 </head>
 <body>
 <div class="topbar-w3ls">
-	<a href="index.html" class="logo"><h1>Literati</h1></a>	
+	<a href="index.html" class="logo"><h1>Literati</h1></a>
 	<div class="top-agileits">
 		<form class="search-container" action="#" method="post">
 			<input id="search-box" type="text" class="search-box" name="q" placeholder="Search Here"/>	
 			<label for="search-box"><span class="glyphicon glyphicon-search search-icon"></span></label>	
 			<input type="submit" id="search-submit" />
-		</form>	
+		</form>
+        {% if request.user.is_authenticated %}
+            <p>欢迎你&nbsp;&nbsp;*^*&nbsp;&nbsp;<a href="/login/" style="color:white">{{ user.username }}</a> </p>
+         {% else %}
 		<p><a href="/login/" style="color:white">登录</a>&nbsp;&nbsp;||&nbsp;&nbsp;<a href="/login/" style="color:white">注册</a> </p>
+        {% endif %}
 		<div class="clearfix"></div>
 	</div>
 </div>
