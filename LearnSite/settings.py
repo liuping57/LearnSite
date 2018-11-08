@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'captcha',
+    "pure_pagination",
 ]
 
 # 此处重载是为了使我们的UserProfile生效
@@ -52,6 +53,7 @@ AUTH_USER_MODEL = "users.UserProfile"
 
 
 MIDDLEWARE = [
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -75,6 +77,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "django.template.context_processors.i18n",
+                'django.template.context_processors.media',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -139,6 +144,11 @@ STATICFILES_DIRS =[(
     os.path.join(BASE_DIR, 'static')
 )]
 
+# 设置我们上传文件的路径
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # 发送邮件的setting设置
 
@@ -148,3 +158,10 @@ EMAIL_HOST_USER = "169078747@qq.com"
 EMAIL_HOST_PASSWORD = "hepvpdnidmcvbggi"
 EMAIL_USE_TLS = True
 EMAIL_FROM = "169078747@qq.com"
+
+
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 10,
+    'MARGIN_PAGES_DISPLAYED': 2,
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True,
+}
