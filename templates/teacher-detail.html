@@ -1,26 +1,21 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% block titile %}
-讲师详情 | mtianyan慕课小站
+讲师详情
 {% endblock %}
 
-{% load staticfiles %}
-<!--crumbs start-->
 {% block custom_bread %}
     <section>
         <div class="wp">
             <ul  class="crumbs">
-                <li><a href="{% url 'index' %}">首页</a>></li>
-                   <li><a href="{% url 'org:teacher_list' %}">授课教师</a>></li>
+                <li><a href="{% url "index" %}">首页</a>></li>
+                <li><a href="teachers-list.html">授课讲师</a>></li>
                 <li>讲师详情</li>
             </ul>
         </div>
     </section>
 {% endblock %}
-
-
 {% block content %}
-    <section>
+      <section>
 	<div class="wp butler-detail-box butler-diaryd-box clearfix">
         <div class="fl list">
             <div class="butler_detail_list clearfix">
@@ -29,15 +24,6 @@
                         <dt>
                             <div class="picpic">
                                 <img width="100" height="100" src="{{ MEDIA_URL }}{{ teacher.image }}"/>
-                            </div>
-                            <div class="btn">
-                                <span class="fl btn1 collectionbtn" id="jsLeftBtn">
-                                    {% if has_fav_teacher %} 已收藏{% else %}收藏{% endif %}
-                                </span>
-                                <span class="fr btn2 shareBtn bdsharebuttonbox" data-tag="share_{{ teacher.id }}">
-                                    <span class="fl">分享</span>
-                                    <a href="#" class="bds_more" data-cmd="more"></a>
-                                </span>
                             </div>
                         </dt>
                         <dd>
@@ -135,11 +121,6 @@
                             </dd>
                         </dl>
                         {% endfor %}
-
-
-
-
-
                     </div>
                 </div>
             </div>
@@ -147,7 +128,6 @@
 	</div>
 </section>
 {% endblock %}
-
 {% block custom_js %}
 <script type="text/javascript">
 //收藏分享
@@ -155,16 +135,16 @@ function add_fav(current_elem, fav_id, fav_type){
     $.ajax({
         cache: false,
         type: "POST",
-        url:"{% url "org:add_fav" %}",
+        url:"/org/add_fav/",
         data:{'fav_id':fav_id, 'fav_type':fav_type},
         async: true,
         beforeSend:function(xhr, settings){
-            xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            xhr.setRequestHeader("X-CSRFToken", "5I2SlleZJOMUX9QbwYLUIAOshdrdpRcy");
         },
         success: function(data) {
             if(data.status == 'fail'){
                 if(data.msg == '用户未登录'){
-                    window.location.href="/login/?next={{ request.path }}";
+                    window.location.href="login.html";
                 }else{
                     alert(data.msg)
                 }
@@ -177,34 +157,14 @@ function add_fav(current_elem, fav_id, fav_type){
 }
 
 $('#jsLeftBtn').on('click', function(){
-    add_fav($(this), {{ teacher.id }}, 3);
+    add_fav($(this), 1, 3);
 });
 
 $('#jsRightBtn').on('click', function(){
-    add_fav($(this), {{ teacher.org.id }}, 2);
+    add_fav($(this), 1, 2);
 });
 
 
 </script>
-<script>
-
-    window._bd_share_config = {
-        "common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":["mshare","qzone","tsina","weixin","sqq"],"bdPic":"","bdStyle":"0","bdSize":"16"},
-        share : [
-                   {
-			"tag" : "share_{{ teacher.id }}",
-			"bdSize" : 16,
-                       "bdText":"授课教师-{{ teacher.name }}-mtianyan慕课小站",
-                       "bdDesc": "我在#mtianyan慕课小站#发现了老师“{{ teacher.name }}”，对我们学习很有帮助，一起来看看吧",
-                        "bdUrl": 'http://mxonline.mtianyan.cn{% url 'org:teacher_detail' teacher.id %}',
-
-
-		},
-]
-
-    }
-	//以下为js加载部分
-	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-
 {% endblock %}
+
