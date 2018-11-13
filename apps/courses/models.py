@@ -16,6 +16,7 @@ class Course(models.Model):
         ("zj", u"中级"),
         ("gj", u"高级")
     )
+
     course_org = models.ForeignKey(CourseOrg,on_delete=models.CASCADE, verbose_name=u"所属机构",null=True,blank=True)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE,verbose_name=u"讲师", null=True, blank=True)
     name = models.CharField(max_length=50, verbose_name=u"课程名")
@@ -45,6 +46,10 @@ class Course(models.Model):
     class Meta:
         verbose_name = u"课程"
         verbose_name_plural = verbose_name
+
+    def get_zj_nums(self):
+        # 获取课程章节数的方法
+        return self.lesson_set.all().count()
 
     # 替代标签:course.lesson_set.count
     # def get_zj_nums(self):
@@ -82,7 +87,7 @@ class Video(models.Model):
     # 因为一个章节对应很多视频。所以在视频表中将章节设置为外键。
     # 作为一个字段来存储让我们可以知道这个视频对应哪个章节.
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name=u"章节")
-    url = models.CharField(max_length=200, default="http://blog.mtianyan.cn/", verbose_name=u"访问地址")
+    url = models.CharField(max_length=200, default="", verbose_name=u"访问地址")
     name = models.CharField(max_length=100, verbose_name=u"视频名")
     # 使用分钟做后台记录(存储最小单位)前台转换
     learn_times = models.IntegerField(default=0, verbose_name=u"学习时长(分钟数)")

@@ -27,8 +27,8 @@ class BaseSetting(object):
 
 # x admin 全局配置参数信息设置
 class GlobalSettings(object):
-    site_title = "天涯明月笙: 慕课后台管理站"
-    site_footer = "mtianyan's mooc"
+    site_title = "后台管理"
+    site_footer = "xinjie's web"
     # 收起菜单
     menu_style = "accordion"
 
